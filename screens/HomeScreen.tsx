@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-const EventDetails: React.FC = () => {
+const HomeScreen: React.FC = () => {
   return (
     <View style={styles.view}>
-      <Text>EventDetails Screen</Text>
+      <Text>Home Screen</Text>
     </View>
   );
 };
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EventDetails;
+export default HomeScreen;

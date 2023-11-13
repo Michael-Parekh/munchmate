@@ -1,6 +1,6 @@
-import Home from "./Home";
-import Map from "./Map";
-import Post from "./Post";
-import EventDetails from "./EventDetails";
+import HomeScreen from "./HomeScreen";
+import MapScreen from "./MapScreen";
+import PostScreen from "./PostScreen";
+import EventDetailsScreen from "./EventDetailsScreen";
 
-export { Home, Map, Post, EventDetails };
+export { HomeScreen, MapScreen, PostScreen, EventDetailsScreen };

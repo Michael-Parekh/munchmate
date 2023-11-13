@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-const Map: React.FC = () => {
+const PostScreen: React.FC = () => {
   return (
     <View style={styles.view}>
-      <Text>Map Screen</Text>
+      <Text>Post Screen</Text>
     </View>
   );
 };
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Map;
+export default PostScreen;

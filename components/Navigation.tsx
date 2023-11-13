@@ -2,10 +2,10 @@ import React from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
-  Home,
-  Map,
-  Post,
-  EventDetails
+  HomeScreen,
+  MapScreen,
+  PostScreen,
+  EventDetailsScreen
 } from "../screens";
 import { ScreenNames } from "../constants";
 
@@ -16,7 +16,7 @@ const Navigation: React.FC = () => {
     <Tab.Navigator>
       <Tab.Screen 
         name={ScreenNames.HOME} 
-        component={Home} 
+        component={HomeScreen} 
         options={{
           headerShown: false,
           tabBarLabel: 'Home',
@@ -27,7 +27,7 @@ const Navigation: React.FC = () => {
       />
       <Tab.Screen 
         name={ScreenNames.MAP} 
-        component={Map} 
+        component={MapScreen} 
         options={{
           headerShown: false,
           tabBarLabel: 'Map',
@@ -38,7 +38,7 @@ const Navigation: React.FC = () => {
       />
       <Tab.Screen 
         name={ScreenNames.POST} 
-        component={Post} 
+        component={PostScreen} 
         options={{
           headerShown: false,
           tabBarLabel: 'Post',
