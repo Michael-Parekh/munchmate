@@ -18,9 +18,10 @@ const Navigation: React.FC = () => {
         name={ScreenNames.HOME} 
         component={Home} 
         options={{
+          headerShown: false,
           tabBarLabel: 'Home',
-          tabBarIcon: () => (
-            <MaterialCommunityIcons name="home" size={30} />
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
         }}
       />
@@ -28,9 +29,10 @@ const Navigation: React.FC = () => {
         name={ScreenNames.MAP} 
         component={Map} 
         options={{
+          headerShown: false,
           tabBarLabel: 'Map',
-          tabBarIcon: () => (
-            <MaterialCommunityIcons name="map" size={30} />
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="map" color={color} size={size} />
           ),
         }}
       />
@@ -38,9 +40,10 @@ const Navigation: React.FC = () => {
         name={ScreenNames.POST} 
         component={Post} 
         options={{
+          headerShown: false,
           tabBarLabel: 'Post',
-          tabBarIcon: () => (
-            <MaterialCommunityIcons name="plus" size={30} />
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="plus" color={color} size={size} />
           ),
         }}
       />
