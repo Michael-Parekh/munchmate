@@ -9,15 +9,36 @@ import {
   PostConfirmationScreen
 } from "../screens";
 import { ScreenNames } from "../constants";
+import { createStackNavigator } from '@react-navigation/stack';
+
+// Stack navigator from the Home tab
+const HomeStack = createStackNavigator();
+
+const HomeStackScreen = () => {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+        name='Home'
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <HomeStack.Screen
+        name='EventDetail'
+        component={EventDetailsScreen}
+      // options={{ headerShown: false }}
+      />
+    </HomeStack.Navigator>
+  )
+}
+
+const Tab = createBottomTabNavigator();
 
 const Navigation: React.FC = () => {
-  const Tab = createBottomTabNavigator();
-
   return (
     <Tab.Navigator>
-      <Tab.Screen 
-        name={ScreenNames.HOME} 
-        component={HomeScreen} 
+      <Tab.Screen
+        name={ScreenNames.HOME}
+        component={HomeStackScreen}
         options={{
           headerShown: false,
           tabBarLabel: 'Home',
@@ -26,9 +47,9 @@ const Navigation: React.FC = () => {
           ),
         }}
       />
-      <Tab.Screen 
-        name={ScreenNames.MAP} 
-        component={MapScreen} 
+      <Tab.Screen
+        name={ScreenNames.MAP}
+        component={MapScreen}
         options={{
           headerShown: false,
           tabBarLabel: 'Map',
@@ -37,9 +58,9 @@ const Navigation: React.FC = () => {
           ),
         }}
       />
-      <Tab.Screen 
-        name={ScreenNames.POST} 
-        component={PostScreen} 
+      <Tab.Screen
+        name={ScreenNames.POST}
+        component={PostScreen}
         options={{
           headerShown: false,
           tabBarLabel: 'Post',
@@ -48,9 +69,9 @@ const Navigation: React.FC = () => {
           ),
         }}
       />
-      <Tab.Screen 
-        name={ScreenNames.POST_CONFIRMATION} 
-        component={PostConfirmationScreen} 
+      <Tab.Screen
+        name={ScreenNames.POST_CONFIRMATION}
+        component={PostConfirmationScreen}
         options={{
           tabBarButton: () => null,
           headerShown: false

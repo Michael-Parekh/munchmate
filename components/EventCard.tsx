@@ -1,53 +1,55 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Modal, Button, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Modal, Button, TextInput, TouchableOpacity } from 'react-native';
 
-const EventCard = ({eventTitle,eventDate} : {eventTitle:string, eventDate:String}) => {
+const EventCard = ({ eventTitle, eventDate, onPress }: { eventTitle: string, eventDate: String, onPress: () => void }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  
+
   const closeModal = () => {
     setModalVisible(false);
   };
 
   return (
     <>
-      <View style={styles.card}>
-        <Text style={styles.title}>{ eventTitle }</Text>
-        <Text style={styles.details}>{ eventDate }</Text>
-        {/* Add more event details as needed */}
-      </View>
+      <TouchableOpacity onPress={onPress}>
+        <View style={styles.card}>
+          <Text style={styles.title}>{eventTitle}</Text>
+          <Text style={styles.details}>{eventDate}</Text>
+          {/* Add more event details as needed */}
+        </View>
+      </TouchableOpacity>
 
 
       <Modal
-      visible={isModalVisible}
-      animationType="slide"
-      transparent={true}
-      onRequestClose={closeModal}
+        visible={isModalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={closeModal}
       >
-      <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>Select Date Range</Text>
-          
-          <TextInput
-            style={styles.input}
-            placeholder="Start Date (YYYY-MM-DD)"
-            value={startDate}
-            onChangeText={(text) => setStartDate(text)}
-          />
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Select Date Range</Text>
 
-          <TextInput
-            style={styles.input}
-            placeholder="End Date (YYYY-MM-DD)"
-            value={endDate}
-            onChangeText={(text) => setEndDate(text)}
-          />
+            <TextInput
+              style={styles.input}
+              placeholder="Start Date (YYYY-MM-DD)"
+              value={startDate}
+              onChangeText={(text) => setStartDate(text)}
+            />
 
-          <View style={styles.buttonContainer}>
-            <Button title="Submit"/>
+            <TextInput
+              style={styles.input}
+              placeholder="End Date (YYYY-MM-DD)"
+              value={endDate}
+              onChangeText={(text) => setEndDate(text)}
+            />
+
+            <View style={styles.buttonContainer}>
+              <Button title="Submit" />
+            </View>
           </View>
         </View>
-      </View>
       </Modal>
     </>
   );

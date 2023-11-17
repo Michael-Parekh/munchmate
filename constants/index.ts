@@ -1,3 +1,4 @@
 import { ScreenNames } from "./screenNames";
+import { StackParamList } from "./objects";
 
-export { ScreenNames };
+export { ScreenNames, StackParamList };
