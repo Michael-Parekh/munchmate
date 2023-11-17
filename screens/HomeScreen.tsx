@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Modal, Button } from "react-native";
 import EventCard from "../components/EventCard";
 import FilterButton from "../components/ButtonTextWithModal";
+import { useNavigation } from "@react-navigation/native";
+import { ScreenNames } from "../constants";
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const HomeScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -10,6 +13,13 @@ const HomeScreen = () => {
   const closeModal = () => {
     setModalVisible(false);
   };
+
+  type StackParamList = {
+    Home: undefined;
+    EventDetail: { eventTitle: string; eventDate: string };
+  }
+
+  const navigation = useNavigation<StackNavigationProp<StackParamList, 'Home'>>();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -20,11 +30,23 @@ const HomeScreen = () => {
           <FilterButton buttonTitle="Organizer" />
           <FilterButton buttonTitle="Location" />
         </View>
-      
 
-      <EventCard eventTitle="Hack4Impact" eventDate="January 14th, 2023"/>
-      <EventCard eventTitle="TechFusion Expo" eventDate="March 8th, 2023"/>
-      <EventCard eventTitle="CodeCrafters Summit" eventDate="August 5th, 2023"/>
+
+        <EventCard
+          eventTitle="Hack4Impact"
+          eventDate="January 14th, 2023"
+          onPress={() => navigation.navigate('EventDetail', { eventTitle: "Hack4Impact", eventDate: "January 14th, 2023" })}
+        />
+        <EventCard
+          eventTitle="TechFusion Expo"
+          eventDate="March 8th, 2023"
+          onPress={() => navigation.navigate('EventDetail', { eventTitle: "TechFusion Expo", eventDate: "March 8th, 2023" })}
+        />
+        <EventCard
+          eventTitle="CodeCrafters Summit"
+          eventDate="August 5th, 2023"
+          onPress={() => navigation.navigate('EventDetail', { eventTitle: "CodeCrafters Summit", eventDate: "August 5th, 2023" })}
+        />
       </View>
     </SafeAreaView>
   );
