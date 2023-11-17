@@ -20,7 +20,14 @@ const PostScreen: React.FC = () => {
   const {navigate} = useNavigation<BottomTabNavigationProp<RootBottomTabParamList>>();
 
   const handlePressSubmit = () => {
-    navigate(ScreenNames.POST_CONFIRMATION)
+    setTitle('');
+    setName('');
+    setDate('');
+    setStartTime('');
+    setEndTime('');
+    setDescription('');
+    
+    navigate(ScreenNames.POST_CONFIRMATION);
   };
   
   return (
