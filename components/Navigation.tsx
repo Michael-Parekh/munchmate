@@ -5,7 +5,8 @@ import {
   HomeScreen,
   MapScreen,
   PostScreen,
-  EventDetailsScreen
+  EventDetailsScreen,
+  PostConfirmationScreen
 } from "../screens";
 import { ScreenNames } from "../constants";
 import { createStackNavigator } from '@react-navigation/stack';
@@ -66,6 +67,14 @@ const Navigation: React.FC = () => {
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="plus" color={color} size={size} />
           ),
+        }}
+      />
+      <Tab.Screen 
+        name={ScreenNames.POST_CONFIRMATION} 
+        component={PostConfirmationScreen} 
+        options={{
+          tabBarButton: () => null,
+          headerShown: false
         }}
       />
     </Tab.Navigator>
