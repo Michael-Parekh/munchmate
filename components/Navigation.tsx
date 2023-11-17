@@ -5,7 +5,8 @@ import {
   HomeScreen,
   MapScreen,
   PostScreen,
-  EventDetailsScreen
+  EventDetailsScreen,
+  PostConfirmationScreen
 } from "../screens";
 import { ScreenNames } from "../constants";
 
@@ -47,7 +48,14 @@ const Navigation: React.FC = () => {
           ),
         }}
       />
-      
+      <Tab.Screen 
+        name={ScreenNames.POST_CONFIRMATION} 
+        component={PostConfirmationScreen} 
+        options={{
+          tabBarButton: () => null,
+          headerShown: false
+        }}
+      />
     </Tab.Navigator>
   );
 };

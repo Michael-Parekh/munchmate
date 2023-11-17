@@ -1,5 +1,12 @@
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ScreenNames } from "../constants";
+
+export type RootBottomTabParamList = {
+  POST_CONFIRMATION: undefined;
+};
 
 const PostScreen: React.FC = () => {
 
@@ -10,9 +17,10 @@ const PostScreen: React.FC = () => {
   const [endTime, setEndTime] = useState('');
   const [description, setDescription] = useState('');
 
+  const {navigate} = useNavigation<BottomTabNavigationProp<RootBottomTabParamList>>();
+
   const handlePressSubmit = () => {
-    // Handle form submission logic here
-    
+    navigate(ScreenNames.POST_CONFIRMATION)
   };
   
   return (
