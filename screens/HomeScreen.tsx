@@ -5,6 +5,7 @@ import FilterButton from "../components/ButtonTextWithModal";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNames } from "../constants";
 import { StackNavigationProp } from '@react-navigation/stack';
+import { StackParamList } from "../constants";
 
 const HomeScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -13,11 +14,6 @@ const HomeScreen = () => {
   const closeModal = () => {
     setModalVisible(false);
   };
-
-  type StackParamList = {
-    Home: undefined;
-    EventDetail: { eventTitle: string; eventDate: string };
-  }
 
   const navigation = useNavigation<StackNavigationProp<StackParamList, 'Home'>>();
 
