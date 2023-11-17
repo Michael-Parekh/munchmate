@@ -25,7 +25,7 @@ const HomeStackScreen = () => {
       <HomeStack.Screen
         name='EventDetail'
         component={EventDetailsScreen}
-        options={{ headerShown: false }}
+      // options={{ headerShown: false }}
       />
     </HomeStack.Navigator>
   )
@@ -69,9 +69,9 @@ const Navigation: React.FC = () => {
           ),
         }}
       />
-      <Tab.Screen 
-        name={ScreenNames.POST_CONFIRMATION} 
-        component={PostConfirmationScreen} 
+      <Tab.Screen
+        name={ScreenNames.POST_CONFIRMATION}
+        component={PostConfirmationScreen}
         options={{
           tabBarButton: () => null,
           headerShown: false
