@@ -20,7 +20,14 @@ const PostScreen: React.FC = () => {
   const {navigate} = useNavigation<BottomTabNavigationProp<RootBottomTabParamList>>();
 
   const handlePressSubmit = () => {
-    navigate(ScreenNames.POST_CONFIRMATION)
+    setTitle('');
+    setName('');
+    setDate('');
+    setStartTime('');
+    setEndTime('');
+    setDescription('');
+    
+    navigate(ScreenNames.POST_CONFIRMATION);
   };
   
   return (
@@ -46,7 +53,6 @@ const PostScreen: React.FC = () => {
         <TextInput
           style={styles.input}
           placeholder="Date"
-          secureTextEntry
           value={date}
           onChangeText={(text) => setDate(text)}
         />
@@ -54,7 +60,6 @@ const PostScreen: React.FC = () => {
         <TextInput
           style={styles.input}
           placeholder="Start time"
-          secureTextEntry
           value={startTime}
           onChangeText={(text) => setStartTime(text)}
         />
@@ -62,7 +67,6 @@ const PostScreen: React.FC = () => {
         <TextInput
           style={styles.input}
           placeholder="End time"
-          secureTextEntry
           value={endTime}
           onChangeText={(text) => setEndTime(text)}
         />
