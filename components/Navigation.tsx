@@ -36,6 +36,18 @@ const Navigation: React.FC = () => {
           ),
         }}
       />
+      <Tab.Screen 
+        name={ScreenNames.POST} 
+        component={PostScreen} 
+        options={{
+          headerShown: false,
+          tabBarLabel: 'Post',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="plus" color={color} size={size} />
+          ),
+        }}
+      />
+      
     </Tab.Navigator>
   );
 };
