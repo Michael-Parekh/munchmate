@@ -3,6 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { ScreenNames } from "../constants";
+import { collection, addDoc } from "firebase/firestore"; 
+import { sendData } from "../firebaseConfig";
 
 export type RootBottomTabParamList = {
   POST_CONFIRMATION: undefined;
@@ -26,7 +28,9 @@ const PostScreen: React.FC = () => {
     setStartTime('');
     setEndTime('');
     setDescription('');
-    
+
+    sendData();
+
     navigate(ScreenNames.POST_CONFIRMATION);
   };
   
