@@ -1,21 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Modal, Button } from "react-native";
 import EventCard from "../components/EventCard";
 import FilterButton from "../components/ButtonTextWithModal";
-import { useNavigation } from "@react-navigation/native";
-import { ScreenNames } from "../constants";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from '@react-navigation/stack';
 import { StackParamList } from "../constants";
+import { getData } from "../firebaseConfig";
 
 const HomeScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedButton, setSelectedButton] = useState("");
+
+  const [events, setEvents] = useState<any[]>([]);
 
   const closeModal = () => {
     setModalVisible(false);
   };
 
   const navigation = useNavigation<StackNavigationProp<StackParamList, 'Home'>>();
+
+  useFocusEffect(() => {
+    // write your code here, it's like componentWillMount
+    const getEvents = async () => {
+      const data = await getData();
+      setEvents(data);
+    };
+    
+    getEvents()
+  })  
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -27,22 +40,14 @@ const HomeScreen = () => {
           <FilterButton buttonTitle="Location" />
         </View>
 
-
-        <EventCard
-          eventTitle="Hack4Impact"
-          eventDate="January 14th, 2023"
-          onPress={() => navigation.navigate('EventDetail', { eventTitle: "Hack4Impact", eventDate: "January 14th, 2023" })}
-        />
-        <EventCard
-          eventTitle="TechFusion Expo"
-          eventDate="March 8th, 2023"
-          onPress={() => navigation.navigate('EventDetail', { eventTitle: "TechFusion Expo", eventDate: "March 8th, 2023" })}
-        />
-        <EventCard
-          eventTitle="CodeCrafters Summit"
-          eventDate="August 5th, 2023"
-          onPress={() => navigation.navigate('EventDetail', { eventTitle: "CodeCrafters Summit", eventDate: "August 5th, 2023" })}
-        />
+        {events.map((item, index) => (
+          <EventCard 
+            key={index} 
+            eventTitle={item.title} 
+            eventDate={item.date} 
+            onPress={() => navigation.navigate('EventDetail', { eventTitle: item.title, eventDate: "January 14th, 2023" })} 
+          />
+        ))}
       </View>
     </SafeAreaView>
   );

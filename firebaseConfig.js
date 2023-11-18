@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { getFirestore } from "firebase/firestore";
 
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -21,15 +21,46 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-export async function sendData() {
+export async function sendData(
+  title, 
+  organizer, 
+  date, 
+  start_time, 
+  end_time, 
+  location,  
+  meal, 
+  allergens, 
+  req_attendance, 
+  description
+  ) {
   try {
-    const docRef = await addDoc(collection(db, "users"), {
-      first: "Ada",
-      last: "Lovelace",
-      born: 1815
+    const docRef = await addDoc(collection(db, "events"), {
+      title: title,
+      organizer: organizer,
+      date: date,
+      start_time: start_time,
+      end_time: end_time, 
+      location: location,
+      meal: meal,
+      allergens: allergens,
+      req_attendance: req_attendance,
+      description: description,
+      upvotes: 0,
+      downvotes: 0,
     });
-    console.log("Document written with ID: ", docRef.id);
+    console.log("Event created with ID: ", docRef.id);
   } catch (e) {
-    console.error("Error adding document: ", e);
+    console.error("Error adding event: ", e);
   }
+}
+
+export async function getData() {
+  let res = []
+  
+  const querySnapshot = await getDocs(collection(db, "events"));
+  querySnapshot.forEach((doc) => {
+    res.push(doc.data())
+  });
+
+  return res
 }
