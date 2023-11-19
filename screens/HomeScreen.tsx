@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Modal, Button } from "react-native";
+import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Modal, Button, ScrollView } from "react-native";
 import EventCard from "../components/EventCard";
 import FilterButton from "../components/ButtonTextWithModal";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -32,23 +32,24 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.filterContent}>
-        <View style={styles.buttonContainer}>
-          <FilterButton buttonTitle="Date" />
-          <FilterButton buttonTitle="Time" />
-          <FilterButton buttonTitle="Organizer" />
-          <FilterButton buttonTitle="Location" />
-        </View>
+      <ScrollView>
+        <View style={styles.filterContent}>
+          <View style={styles.buttonContainer}>
+            <FilterButton buttonTitle="Date" />
+            <FilterButton buttonTitle="Time" />
+            <FilterButton buttonTitle="Organizer" />
+            <FilterButton buttonTitle="Location" />
+          </View>
 
-        {events.map((item, index) => (
-          <EventCard 
-            key={index} 
-            eventTitle={item.title} 
-            eventDate={item.date} 
-            onPress={() => navigation.navigate('EventDetail', { eventTitle: item.title, eventDate: "January 14th, 2023" })} 
-          />
-        ))}
-      </View>
+          {events.map((item, index) => (
+            <EventCard 
+              key={index} 
+              event={item}
+              onPress={() => navigation.navigate('EventDetail', { eventTitle: item.title, eventDate: "January 14th, 2023" })} 
+            />
+          ))}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     alignContent: 'flex-start',
     padding: 0,
-    margin: 0
+    margin: 0,
   },
   filterContent: {
     alignContent: 'flex-start',
@@ -87,9 +88,9 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 20, // Adjust as needed
     padding: 20,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: '#ccc',
-    borderRadius: 8,
+    borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
