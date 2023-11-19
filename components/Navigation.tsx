@@ -25,7 +25,7 @@ const HomeStackScreen = () => {
       <HomeStack.Screen
         name='EventDetail'
         component={EventDetailsScreen}
-      // options={{ headerShown: false }}
+        options={{ title: "" }}
       />
     </HomeStack.Navigator>
   )
