@@ -1,8 +1,10 @@
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { ScreenNames } from "../constants";
+import { collection, addDoc } from "firebase/firestore"; 
+import { sendData } from "../firebaseConfig";
 
 export type RootBottomTabParamList = {
   POST_CONFIRMATION: undefined;
@@ -11,22 +13,32 @@ export type RootBottomTabParamList = {
 const PostScreen: React.FC = () => {
 
   const [title, setTitle] = useState('');
-  const [name, setName] = useState('');
+  const [organizer, setOrganizer] = useState('');
   const [date, setDate] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
+  const [location, setLocation] = useState('');
+  const [meal, setMeal] = useState('');
+  const [allergens, setAllergens] = useState('');
+  const [reqAttendance, setReqAttendance] = useState(false);
   const [description, setDescription] = useState('');
 
   const {navigate} = useNavigation<BottomTabNavigationProp<RootBottomTabParamList>>();
 
   const handlePressSubmit = () => {
     setTitle('');
-    setName('');
+    setOrganizer('');
     setDate('');
     setStartTime('');
     setEndTime('');
+    setLocation('');
+    setMeal('');
+    setAllergens('');
+    setReqAttendance(false);
     setDescription('');
-    
+
+    sendData(title, organizer, date, startTime, endTime, location, meal, allergens, reqAttendance, description);
+
     navigate(ScreenNames.POST_CONFIRMATION);
   };
   
@@ -44,10 +56,9 @@ const PostScreen: React.FC = () => {
 
         <TextInput
           style={styles.input}
-          placeholder="Organizer name"
-          keyboardType="email-address"
-          value={name}
-          onChangeText={(text) => setName(text)}
+          placeholder="Organizer name" 
+          value={organizer}
+          onChangeText={(text) => setOrganizer(text)}
         />
 
         <TextInput
@@ -72,6 +83,27 @@ const PostScreen: React.FC = () => {
         />
 
         <TextInput
+          style={styles.input}
+          placeholder="Location"
+          value={location}
+          onChangeText={(text) => setLocation(text)}
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Meal type"
+          value={meal}
+          onChangeText={(text) => setMeal(text)}
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Allergens"
+          value={allergens}
+          onChangeText={(text) => setAllergens(text)}
+        />
+
+        <TextInput
           style={styles.textArea}
           placeholder="Description of event"
           multiline
@@ -90,9 +122,9 @@ const PostScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     padding: 16,
+    marginTop: 50,
   },
   header: {
     fontSize: 35,
@@ -102,6 +134,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     alignItems: 'center',
+    height: 800
   },
   input: {
     height: 40,
