@@ -124,8 +124,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     padding: 16,
-    marginTop: 100,
-    marginBottom: 100,
+    marginTop: 50,
   },
   header: {
     fontSize: 35,
@@ -135,7 +134,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     alignItems: 'center',
-    height: 1000
+    height: 800
   },
   input: {
     height: 40,
