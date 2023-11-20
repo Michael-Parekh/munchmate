@@ -31,7 +31,7 @@ import { Checkbox } from 'react-native-paper';
 
 
 const App = () => {
-  const [radius, setRadius] = useState(1);
+
 
   type FilterKeys = 'glutenFree' | 'vegetarian' | 'requiredAttendance' | 'dairyFree' | 'nutFree';
   type Filters = Record<FilterKeys, boolean>;
@@ -64,10 +64,7 @@ const App = () => {
 
        {/* Header */}
        <View style={styles.header}>
-        <Text style={styles.headerTitle}>Map View</Text>
-        <TouchableOpacity style={styles.settingsButton}>
-          <MaterialIcons name="settings" size={24} color="black" />
-        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Events Near Me</Text>
       </View>
 
     
@@ -102,41 +99,25 @@ const App = () => {
           
         </MapView>
       </View>
-      
-      {/* Radius Slider Container */}
-      <View style={styles.radiusSliderContainer}>
-        <Text style={styles.radiusLabel}>Radius</Text>
-        <Slider
-          style={styles.slider}
-          minimumValue={0}
-          maximumValue={10}
-          value={radius}
-          onValueChange={setRadius}
-          minimumTrackTintColor="#1fb28a"
-          maximumTrackTintColor="#d3d3d3"
-          thumbTintColor="#1a9274"
-        />
-        <Text style={styles.radiusValue}>{`${radius.toFixed(2)} mile${radius > 1 ? 's' : ''}`}</Text>
-      </View>
 
 
       {/* Event Filters Container */}
       <View style={styles.filtersContainer}>
-        <Text style={styles.filterTitle}>Event Filter</Text>
+        <Text style={styles.filterTitle}>Filter By</Text>
 
         {Object.keys(filters).map((key) => (
-  <View key={key} style={styles.checkboxContainer}>
-    <Checkbox
-      status={filters[key as FilterKeys] ? 'checked' : 'unchecked'}
-      disabled={true}
-      uncheckedColor="grey"  // Set the color when the checkbox is unchecked
-      color={filters[key as FilterKeys] ? 'blue' : 'grey'}  // Set the color when the checkbox is checked
-    />
-    <Text style={styles.checkboxLabel}>
-      {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
-    </Text>
-  </View>
-))}
+          <View key={key} style={styles.checkboxContainer}>
+            <Checkbox
+              status={filters[key as FilterKeys] ? 'checked' : 'unchecked'}
+              disabled={true}
+              uncheckedColor="grey"  // Set the color when the checkbox is unchecked
+              color={filters[key as FilterKeys] ? 'blue' : 'grey'}  // Set the color when the checkbox is checked
+            />
+            <Text style={styles.checkboxLabel}>
+              {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
+            </Text>
+          </View>
+        ))}
         
       
       </View>
@@ -212,13 +193,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 16,
-    paddingHorizontal: 20,
-    marginTop: 20, // move screen header up/down
+    paddingVertical: 10,
+    marginTop: 40, // move screen header up/down
     width: '100%',
   },
   headerTitle: {
-    fontSize: 22,
+    fontSize: 25,
     fontWeight: 'bold',
   }
 

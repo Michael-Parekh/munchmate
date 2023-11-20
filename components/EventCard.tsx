@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Modal, Button, TextInput, TouchableOpacity } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
-const EventCard = ({ eventTitle, eventDate, onPress }: { eventTitle: string, eventDate: String, onPress: () => void }) => {
+const EventCard = ({ event, onPress }: { event: any, onPress: () => void }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -14,70 +15,56 @@ const EventCard = ({ eventTitle, eventDate, onPress }: { eventTitle: string, eve
     <>
       <TouchableOpacity onPress={onPress}>
         <View style={styles.card}>
-          <Text style={styles.title}>{eventTitle}</Text>
-          <Text style={styles.details}>{eventDate}</Text>
-          {/* Add more event details as needed */}
-        </View>
-      </TouchableOpacity>
-
-
-      <Modal
-        visible={isModalVisible}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={closeModal}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Select Date Range</Text>
-
-            <TextInput
-              style={styles.input}
-              placeholder="Start Date (YYYY-MM-DD)"
-              value={startDate}
-              onChangeText={(text) => setStartDate(text)}
-            />
-
-            <TextInput
-              style={styles.input}
-              placeholder="End Date (YYYY-MM-DD)"
-              value={endDate}
-              onChangeText={(text) => setEndDate(text)}
-            />
-
-            <View style={styles.buttonContainer}>
-              <Button title="Submit" />
+          <Text style={styles.title}>{event.title}</Text>
+          <View style={styles.detailsContainer}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <MaterialIcons name="event" size={20} />
+              <Text>{event.date}</Text>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <MaterialIcons name="schedule" size={20} />
+              <Text>{event.start_time} - {event.end_time}</Text>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <MaterialIcons name="location-on" size={20} />
+              <Text>{event.location}</Text>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <MaterialIcons name="location-on" size={20} />
+              <Text>{"Requires Attendance"}</Text>
             </View>
           </View>
         </View>
-      </Modal>
+      </TouchableOpacity>
     </>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    width: 300,
     padding: 20,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: '#ccc',
     borderRadius: 8,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 2, // Android shadow
     margin: 10,
+    width: '95%',
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
   },
   details: {
     fontSize: 16,
     color: '#666',
-    marginTop: 8,
+  },
+  detailsContainer: {
+    marginTop: 10
   },
   modalContainer: {
     flex: 1,
