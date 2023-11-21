@@ -47,70 +47,97 @@ const PostScreen: React.FC = () => {
       <Text style={styles.header}>Create Event</Text>
 
       <View style={styles.formContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Event title"
-          value={title}
-          onChangeText={(text) => setTitle(text)}
-        />
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>{"Event title"}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Event title"
+            value={title}
+            onChangeText={(text) => setTitle(text)}
+          />
+        </View>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Organizer name" 
-          value={organizer}
-          onChangeText={(text) => setOrganizer(text)}
-        />
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>{"Organizer name"}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Organizer name" 
+            value={organizer}
+            onChangeText={(text) => setOrganizer(text)}
+          />
+        </View>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Date"
-          value={date}
-          onChangeText={(text) => setDate(text)}
-        />
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>{"Date"}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Date"
+            value={date}
+            onChangeText={(text) => setDate(text)}
+          />
+        </View>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Start time"
-          value={startTime}
-          onChangeText={(text) => setStartTime(text)}
-        />
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>{"Start time"}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Start time"
+            value={startTime}
+            onChangeText={(text) => setStartTime(text)}
+          />
+        </View>
 
-        <TextInput
-          style={styles.input}
-          placeholder="End time"
-          value={endTime}
-          onChangeText={(text) => setEndTime(text)}
-        />
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>{"End time"}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="End time"
+            value={endTime}
+            onChangeText={(text) => setEndTime(text)}
+          />
+        </View>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Location"
-          value={location}
-          onChangeText={(text) => setLocation(text)}
-        />
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>{"Location"}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Location"
+            value={location}
+            onChangeText={(text) => setLocation(text)}
+          />
+        </View>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Meal type"
-          value={meal}
-          onChangeText={(text) => setMeal(text)}
-        />
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>{"Meal type"}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Meal type"
+            value={meal}
+            onChangeText={(text) => setMeal(text)}
+          />
+        </View>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Allergens"
-          value={allergens}
-          onChangeText={(text) => setAllergens(text)}
-        />
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>{"Allergens"}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Allergens"
+            value={allergens}
+            onChangeText={(text) => setAllergens(text)}
+          />
+        </View>
 
-        <TextInput
-          style={styles.textArea}
-          placeholder="Description of event"
-          multiline
-          numberOfLines={8}
-          value={description}
-          onChangeText={(text) => setDescription(text)}
-        />
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>{"Description of event"}</Text>
+          <TextInput
+            style={styles.textArea}
+            placeholder="Description of event"
+            multiline
+            numberOfLines={8}
+            value={description}
+            onChangeText={(text) => setDescription(text)}
+          />
+        </View>
 
         <TouchableOpacity style={styles.submitButton} onPress={handlePressSubmit}>
           <Text style={styles.submitButtonText}>Submit</Text>
@@ -134,11 +161,11 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     alignItems: 'center',
-    height: 800
+    height: 1000
   },
   input: {
     height: 40,
-    width: '85%',
+    width: '100%',
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 10,
@@ -147,7 +174,7 @@ const styles = StyleSheet.create({
   },
   textArea: {
     height: 150,
-    width: '85%',
+    width: '100%',
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 10,
@@ -173,6 +200,17 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
+  inputContainer: {
+    textAlign: 'left',
+    width: '85%'
+  },
+  label: {
+    fontSize: 12,
+    marginBottom: 5,
+    marginLeft: 2,
+    color: '#888',
+    textAlign: 'left'
+  }
 });
 
 export default PostScreen;
