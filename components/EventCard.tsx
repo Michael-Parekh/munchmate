@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Modal, Button, TextInput, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import Pill from './Pill';
 
 const EventCard = ({ event, onPress }: { event: any, onPress: () => void }) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -9,6 +10,34 @@ const EventCard = ({ event, onPress }: { event: any, onPress: () => void }) => {
 
   const closeModal = () => {
     setModalVisible(false);
+  };
+
+  const getPillByMeal = (event: any) => {
+    switch (event.meal) {
+      case 'Breakfast':
+        return <Pill icon="bakery-dining" text="Breakfast" color="#0d8eff" />;
+      case 'Lunch':
+        return <Pill icon="lunch-dining" text="Lunch" color="#fcba03" />;
+      case 'Dinner':
+        return <Pill icon="dinner-dining" text="Dinner" color="#9e0dff" />;
+      case 'Desert':
+        return <Pill icon="cake" text="Desert" color="#ff0d8e" />;
+      case 'Snack':
+        return <Pill icon="local-cafe" text="Snack" color="#fc6b03" />;
+      default:
+        return null;
+    }
+  };
+
+  const getPillByAttendance = (event: any) => {
+    switch (event.req_attendance) {
+      case true:
+        return <Pill icon="check-circle" text="Attendance Required" color="#00cf45" />;
+      case false:
+        return <Pill icon="cancel" text="No Attendance Required" color="#fc3503" />;
+      default:
+        return <Text>{"HEY"}</Text>;
+    }
   };
 
   return (
@@ -29,11 +58,13 @@ const EventCard = ({ event, onPress }: { event: any, onPress: () => void }) => {
               <MaterialIcons name="location-on" size={20} />
               <Text>{event.location}</Text>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <MaterialIcons name="location-on" size={20} />
-              <Text>{"Requires Attendance"}</Text>
-            </View>
           </View>
+
+          <View style={styles.pills}>
+            {getPillByMeal(event)}
+            {getPillByAttendance(event)}
+          </View>
+
         </View>
       </TouchableOpacity>
     </>
@@ -64,7 +95,7 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   detailsContainer: {
-    marginTop: 10
+    marginVertical: 10,
   },
   modalContainer: {
     flex: 1,
@@ -98,6 +129,10 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 20,
   },
+  pills: {
+    flexDirection: 'row', // Display pills in a row
+    
+  }
 });
 
 export default EventCard;
