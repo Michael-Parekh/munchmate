@@ -15,15 +15,15 @@ const EventCard = ({ event, onPress }: { event: any, onPress: () => void }) => {
   const getPillByMeal = (event: any) => {
     switch (event.meal) {
       case 'Breakfast':
-        return <Pill icon="bakery-dining" text="Breakfast" color="#0d8eff" />;
+        return <Pill icon="bakery-dining" text="Breakfast" color="#f5bf42" />;
       case 'Lunch':
-        return <Pill icon="lunch-dining" text="Lunch" color="#fcba03" />;
+        return <Pill icon="lunch-dining" text="Lunch" color="#f5aa42" />;
       case 'Dinner':
-        return <Pill icon="dinner-dining" text="Dinner" color="#9e0dff" />;
+        return <Pill icon="dinner-dining" text="Dinner" color="#f59942" />;
       case 'Desert':
-        return <Pill icon="cake" text="Desert" color="#ff0d8e" />;
+        return <Pill icon="cake" text="Desert" color="#f58442" />;
       case 'Snack':
-        return <Pill icon="local-cafe" text="Snack" color="#fc6b03" />;
+        return <Pill icon="local-cafe" text="Snack" color="#f5da42" />;
       default:
         return null;
     }
@@ -45,18 +45,19 @@ const EventCard = ({ event, onPress }: { event: any, onPress: () => void }) => {
       <TouchableOpacity onPress={onPress}>
         <View style={styles.card}>
           <Text style={styles.title}>{event.title}</Text>
+
           <View style={styles.detailsContainer}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <MaterialIcons name="event" size={20} />
-              <Text>{event.date}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', margin: 3 }}>
+              <MaterialIcons name="event" size={20} style={{ color: '#555555' }} />
+              <Text style={styles.details}>{event.date}</Text>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <MaterialIcons name="schedule" size={20} />
-              <Text>{event.start_time} - {event.end_time}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', margin: 3 }}>
+              <MaterialIcons name="schedule" size={20} style={{ color: '#555555' }} />
+              <Text style={styles.details}>{event.start_time} - {event.end_time}</Text>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <MaterialIcons name="location-on" size={20} />
-              <Text>{event.location}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', margin: 3 }}>
+              <MaterialIcons name="location-on" size={20}  style={{ color: '#555555' }} />
+              <Text style={styles.details}>{event.location}</Text>
             </View>
           </View>
 
@@ -91,11 +92,13 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   details: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: 14,
+    color: '#555555',
+    marginLeft: 5
   },
   detailsContainer: {
-    marginVertical: 10,
+    marginVertical: 13,
+    color: '#333'
   },
   modalContainer: {
     flex: 1,
