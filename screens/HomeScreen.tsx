@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Modal, Button, ScrollView } from "react-native";
+import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Modal, Button, ScrollView, TextInput } from "react-native";
 import EventCard from "../components/EventCard";
 import FilterButton from "../components/ButtonTextWithModal";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -33,6 +33,15 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Explore Events</Text>
+        </View>
+
+        <TextInput
+          style={styles.search}
+          placeholder="Search by title"     
+        />
+
         <View style={styles.filterContent}>
           <View style={styles.buttonContainer}>
             <FilterButton buttonTitle="Date" />
@@ -108,6 +117,27 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
 
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 8,
+    marginTop: 20, // move screen header up/down
+    width: '100%',
+  },
+  headerTitle: {
+    fontSize: 25,
+    fontWeight: 'bold',
+  },
+  search: {
+    height: 40,
+    borderColor: '#3498db',
+    borderWidth: 2,
+    borderRadius: 7,
+    marginHorizontal: 6,
+    paddingHorizontal: 10,
+    marginTop: 10
+  }
 });
 
 export default HomeScreen;
