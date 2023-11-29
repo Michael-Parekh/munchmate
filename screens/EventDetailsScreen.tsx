@@ -5,26 +5,11 @@ import { StackParamList } from "../constants";
 import { AntDesign, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { getEventData } from "../firebaseConfig";
 
-type EventType = {
-  title: string,
-  organizer: string,
-  date: string,
-  start_time: string,
-  end_time: string,
-  location: string,
-  meal: string,
-  allergens: string,
-  req_attendance: boolean,
-  description: string,
-  upvotes: number,
-  downvotes: number,
-}
-
 const EventDetailsScreen: React.FC = () => {
   const route = useRoute<RouteProp<StackParamList, 'EventDetail'>>();
   const { eventId } = route.params;
 
-  const [eventDetails, setEventDetails] = useState<EventType | null>(null);
+  const [eventDetails, setEventDetails] = useState<any>(null);
   const [upvotes, setUpvotes] = useState(30);
   const [downvotes, setDownvotes] = useState(3);
   const [vote, setVote] = useState<'upvote' | 'downvote' | null>(null);
