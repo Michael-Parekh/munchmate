@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { getFirestore } from "firebase/firestore";
 
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, getDocs, getDoc } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -67,7 +67,7 @@ export async function getData() {
 
 // Fetch one specific event data with id
 export async function getEventData(eventId) {
-  console.log(eventId);
+  console.log(eventId)
   const docRef = doc(db, "events", eventId);
   try {
     const docSnap = await getDoc(docRef);
