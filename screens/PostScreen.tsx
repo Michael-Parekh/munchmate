@@ -2,6 +2,7 @@ import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import Checkbox from 'expo-checkbox';
 import { ScreenNames } from "../constants";
 import { collection, addDoc } from "firebase/firestore"; 
 import { sendData } from "../firebaseConfig";
@@ -151,6 +152,14 @@ const PostScreen: React.FC = () => {
           />
         </View>
 
+        <View style={[styles.inputContainer, styles.checkboxContainer]}>
+          <Checkbox
+            value={reqAttendance}
+            onValueChange={setReqAttendance}
+          />
+          <Text style={styles.checkboxText}>Requires attendance</Text>
+        </View>
+
         <TouchableOpacity style={styles.submitButton} onPress={handlePressSubmit}>
           <Text style={styles.submitButtonText}>Submit</Text>
         </TouchableOpacity>
@@ -173,7 +182,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     alignItems: 'center',
-    height: 1000
+    height: 1025
   },
   input: {
     height: 40,
@@ -197,10 +206,12 @@ const styles = StyleSheet.create({
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 25,
+    paddingLeft: 3
   },
   checkboxText: {
     marginLeft: 8,
+    color: 'gray'
   },
   submitButton: {
     backgroundColor: '#2196F3',
