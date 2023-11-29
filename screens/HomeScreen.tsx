@@ -24,10 +24,11 @@ const HomeScreen = () => {
     const getEvents = async () => {
       const data = await getData();
       setEvents(data);
+      // console.log(data);
     };
-    
+
     getEvents()
-  })  
+  })
 
 
   return (
@@ -39,7 +40,7 @@ const HomeScreen = () => {
 
         <TextInput
           style={styles.search}
-          placeholder="Search by title"     
+          placeholder="Search by title"
         />
 
         <View style={styles.filterContent}>
@@ -51,10 +52,10 @@ const HomeScreen = () => {
           </View>
 
           {events.map((item, index) => (
-            <EventCard 
-              key={index} 
+            <EventCard
+              key={index}
               event={item}
-              onPress={() => navigation.navigate('EventDetail', { eventTitle: item.title, eventDate: "January 14th, 2023" })} 
+              onPress={() => navigation.navigate('EventDetail', { eventId: item.id })}
             />
           ))}
         </View>

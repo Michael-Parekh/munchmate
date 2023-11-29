@@ -22,24 +22,24 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export async function sendData(
-  title, 
-  organizer, 
-  date, 
-  start_time, 
-  end_time, 
-  location,  
-  meal, 
-  allergens, 
-  req_attendance, 
+  title,
+  organizer,
+  date,
+  start_time,
+  end_time,
+  location,
+  meal,
+  allergens,
+  req_attendance,
   description
-  ) {
+) {
   try {
     const docRef = await addDoc(collection(db, "events"), {
       title: title,
       organizer: organizer,
       date: date,
       start_time: start_time,
-      end_time: end_time, 
+      end_time: end_time,
       location: location,
       meal: meal,
       allergens: allergens,
@@ -56,11 +56,27 @@ export async function sendData(
 
 export async function getData() {
   let res = []
-  
+
   const querySnapshot = await getDocs(collection(db, "events"));
   querySnapshot.forEach((doc) => {
-    res.push(doc.data())
+    res.push({ id: doc.id, ...doc.data() })
   });
 
   return res
+}
+
+// Fetch one specific event data with id
+export async function getEventData(eventId) {
+  console.log(eventId);
+  const docRef = doc(db, "events", eventId);
+  try {
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...docSnap.data() };
+    } else {
+      console.log("No such document!");
+    }
+  } catch (error) {
+    console.log("Error getting document:", error);
+  }
 }

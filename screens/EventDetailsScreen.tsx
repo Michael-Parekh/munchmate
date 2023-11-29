@@ -1,16 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, ScrollView, Button } from "react-native";
 import { useRoute, RouteProp } from "@react-navigation/native";
 import { StackParamList } from "../constants";
 import { AntDesign, MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { getEventData } from "../firebaseConfig";
+
+type EventType = {
+  title: string,
+  organizer: string,
+  date: string,
+  start_time: string,
+  end_time: string,
+  location: string,
+  meal: string,
+  allergens: string,
+  req_attendance: boolean,
+  description: string,
+  upvotes: number,
+  downvotes: number,
+}
 
 const EventDetailsScreen: React.FC = () => {
   const route = useRoute<RouteProp<StackParamList, 'EventDetail'>>();
-  const { eventTitle, eventDate } = route.params;
+  const { eventId } = route.params;
 
+  const [eventDetails, setEventDetails] = useState<EventType | null>(null);
   const [upvotes, setUpvotes] = useState(30);
   const [downvotes, setDownvotes] = useState(3);
   const [vote, setVote] = useState<'upvote' | 'downvote' | null>(null);
+
+  useEffect(() => {
+    const fetchEvent = async () => {
+      const eventData = await getEventData(eventId);
+      if (eventData) {
+        setEventDetails(eventData);
+        setUpvotes(eventData.upvotes);
+        setDownvotes(eventData.downvotes);
+      }
+    };
+
+    fetchEvent();
+  }, [eventId]);
 
   const handleVote = (type: 'upvote' | 'downvote') => {
     if (type === 'upvote' && vote !== 'upvote') {
@@ -36,7 +66,7 @@ const EventDetailsScreen: React.FC = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>{eventTitle || 'Event Title'}</Text>
+        <Text style={styles.title}>{eventDetails?.title ?? 'Event'}</Text>
         <Text style={styles.organizer}>Organized by UIUC</Text>
       </View>
       <View style={styles.votingContainer}>
@@ -58,7 +88,7 @@ const EventDetailsScreen: React.FC = () => {
       <View style={styles.details}>
         <View style={styles.detailContainer}>
           <AntDesign name="calendar" size={20} style={styles.icon} />
-          <Text style={styles.detailText}>{eventDate || 'Starting Date & Time - Ending Date & Time'}</Text>
+          <Text style={styles.detailText}>{'Starting Date & Time - Ending Date & Time'}</Text>
         </View>
         <View style={styles.detailContainer}>
           <AntDesign name="profile" size={20} style={styles.icon} />
