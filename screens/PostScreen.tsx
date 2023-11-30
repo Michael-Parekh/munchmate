@@ -5,7 +5,8 @@ import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, Touchable
 import Checkbox from 'expo-checkbox';
 import { ScreenNames } from "../constants";
 import { collection, addDoc } from "firebase/firestore"; 
-import { sendData } from "../firebaseConfig";
+import { getLocationCoordinates, sendData } from "../firebaseConfig";
+import Geocoder from 'react-native-geocoding';
 
 export type RootBottomTabParamList = {
   POST_CONFIRMATION: undefined;
@@ -26,9 +27,11 @@ const PostScreen: React.FC = () => {
 
   const {navigate} = useNavigation<BottomTabNavigationProp<RootBottomTabParamList>>();
 
+  Geocoder.init("AIzaSyBRlytQ9NMbuDxqulzCKnVXHmKaxI0iiSU");
+
   const [showErrors, setShowErrors] = useState(false);
 
-  const handlePressSubmit = () => {
+  const handlePressSubmit = async () => {
     setShowErrors(true);
 
     if (!title || !organizer || !date || !startTime || !endTime || !location || !meal || !allergens || !description) {
@@ -46,8 +49,23 @@ const PostScreen: React.FC = () => {
       setAllergens('');
       setReqAttendance(false);
       setDescription('');
-  
-      sendData(title, organizer, date, startTime, endTime, location, meal, allergens, reqAttendance, description);
+
+      const coordinates = await getLocationCoordinates(location)
+
+      sendData(
+        title, 
+        organizer, 
+        date, 
+        startTime, 
+        endTime, 
+        location, 
+        meal, 
+        allergens, 
+        reqAttendance, 
+        description, 
+        coordinates[0],
+        coordinates[1],
+      );
   
       navigate(ScreenNames.POST_CONFIRMATION);
     }

@@ -6,6 +6,8 @@ import { getFirestore } from "firebase/firestore";
 
 import { collection, addDoc, getDocs, getDoc, doc } from "firebase/firestore";
 
+import Geocoder from 'react-native-geocoding';
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCld8BTeJiQzVdxE1eiRv6nYozi0-xIg3I",
@@ -31,7 +33,9 @@ export async function sendData(
   meal,
   allergens,
   req_attendance,
-  description
+  description,
+  latitude,
+  longitude
 ) {
   try {
     const docRef = await addDoc(collection(db, "events"), {
@@ -47,6 +51,8 @@ export async function sendData(
       description: description,
       upvotes: 0,
       downvotes: 0,
+      latitude: latitude,
+      longitude: longitude
     });
     console.log("Event created with ID: ", docRef.id);
   } catch (e) {
@@ -78,5 +84,16 @@ export async function getEventData(eventId) {
     }
   } catch (error) {
     console.log("Error getting document:", error);
+  }
+}
+
+export async function getLocationCoordinates(location) {
+  try {
+    const json = await Geocoder.from(location);
+    const geo = json.results[0].geometry.location;
+    return [geo.lat, geo.lng];
+  } catch (error) {
+    console.log(error);
+    return [0, 0];
   }
 }
