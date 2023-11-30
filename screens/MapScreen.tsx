@@ -94,7 +94,7 @@ const MapScreen = () => {
           >
             {/* Home Marker */}
             <Marker coordinate={homeCoordinates}>
-              <MaterialIcons name="home" size={30} color="#000" />
+              <MaterialIcons name="location-searching" size={30} color="#0377fc" />
             </Marker>
 
             {/* Event Markers */}
@@ -104,7 +104,7 @@ const MapScreen = () => {
                 coordinate={coordinate}
                 onPress={() => handleMarkerClick(coordinate.id)}
               >
-                <MaterialIcons name="event" size={30} color="#000" />
+                <MaterialIcons name="event" size={30} color="#fc5e03" />
               </Marker>
             ))}
           </MapView>
@@ -117,21 +117,15 @@ const MapScreen = () => {
 
       {/* Event Filters Container */}
       <View style={styles.filtersContainer}>
-        <Text style={styles.filterTitle}>Filter By</Text>
+        <View style={styles.legendsContainer}>
+          <MaterialIcons name="location-searching" size={25} color="#0377fc" />
+          <Text style={styles.filterTitle}>Current location</Text>
+        </View>
 
-        {Object.keys(filters).map((key) => (
-          <View key={key} style={styles.checkboxContainer}>
-            <Checkbox
-              status={filters[key as FilterKeys] ? 'checked' : 'unchecked'}
-              disabled={true}
-              uncheckedColor="grey"
-              color={filters[key as FilterKeys] ? 'blue' : 'grey'}
-            />
-            <Text style={styles.checkboxLabel}>
-              {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
-            </Text>
-          </View>
-        ))}
+        <View style={styles.legendsContainer}>
+          <MaterialIcons name="event" size={25} color="#fc5e03" />
+          <Text style={styles.filterTitle}>Event</Text>
+        </View>
       </View>
     </View>
   );
@@ -144,7 +138,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   mapContainer: {
-    height: 320,
+    height: 500,
     borderRadius: 10,
     overflow: 'hidden',
     marginBottom: 20,
@@ -156,14 +150,14 @@ const styles = StyleSheet.create({
   filtersContainer: {
     padding: 10,
     borderRadius: 10,
-    borderWidth: 1,
+    borderWidth: 3,
     borderColor: '#ddd',
     marginBottom: 20,
   },
   filterTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
+    fontSize: 14,
+    color: '#969696',
+    marginLeft: 5
   },
   checkboxContainer: {
     flexDirection: 'row',
@@ -190,6 +184,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  legendsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: 5
+  }
 });
 
 export default MapScreen;
