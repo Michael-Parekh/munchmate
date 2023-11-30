@@ -64,7 +64,7 @@ const MapScreen = () => {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       });
-      setIsLoading(false);
+      setIsLoading(false); 
     })();
   }, []);
 
