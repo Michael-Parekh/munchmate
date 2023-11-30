@@ -2,9 +2,11 @@ import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import Checkbox from 'expo-checkbox';
 import { ScreenNames } from "../constants";
 import { collection, addDoc } from "firebase/firestore"; 
-import { sendData } from "../firebaseConfig";
+import { getLocationCoordinates, sendData } from "../firebaseConfig";
+import Geocoder from 'react-native-geocoding';
 
 export type RootBottomTabParamList = {
   POST_CONFIRMATION: undefined;
@@ -25,9 +27,11 @@ const PostScreen: React.FC = () => {
 
   const {navigate} = useNavigation<BottomTabNavigationProp<RootBottomTabParamList>>();
 
+  Geocoder.init("AIzaSyBRlytQ9NMbuDxqulzCKnVXHmKaxI0iiSU");
+
   const [showErrors, setShowErrors] = useState(false);
 
-  const handlePressSubmit = () => {
+  const handlePressSubmit = async () => {
     setShowErrors(true);
 
     if (!title || !organizer || !date || !startTime || !endTime || !location || !meal || !allergens || !description) {
@@ -45,8 +49,23 @@ const PostScreen: React.FC = () => {
       setAllergens('');
       setReqAttendance(false);
       setDescription('');
-  
-      sendData(title, organizer, date, startTime, endTime, location, meal, allergens, reqAttendance, description);
+
+      const coordinates = await getLocationCoordinates(location)
+
+      sendData(
+        title, 
+        organizer, 
+        date, 
+        startTime, 
+        endTime, 
+        location, 
+        meal, 
+        allergens, 
+        reqAttendance, 
+        description, 
+        coordinates[0],
+        coordinates[1],
+      );
   
       navigate(ScreenNames.POST_CONFIRMATION);
     }
@@ -151,6 +170,14 @@ const PostScreen: React.FC = () => {
           />
         </View>
 
+        <View style={[styles.inputContainer, styles.checkboxContainer]}>
+          <Checkbox
+            value={reqAttendance}
+            onValueChange={setReqAttendance}
+          />
+          <Text style={styles.checkboxText}>Requires attendance</Text>
+        </View>
+
         <TouchableOpacity style={styles.submitButton} onPress={handlePressSubmit}>
           <Text style={styles.submitButtonText}>Submit</Text>
         </TouchableOpacity>
@@ -173,7 +200,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     alignItems: 'center',
-    height: 1000
+    height: 1025
   },
   input: {
     height: 40,
@@ -197,10 +224,12 @@ const styles = StyleSheet.create({
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 25,
+    paddingLeft: 3
   },
   checkboxText: {
     marginLeft: 8,
+    color: 'gray'
   },
   submitButton: {
     backgroundColor: '#2196F3',
