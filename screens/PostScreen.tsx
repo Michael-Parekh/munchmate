@@ -2,9 +2,11 @@ import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import Checkbox from 'expo-checkbox';
 import { ScreenNames } from "../constants";
 import { collection, addDoc } from "firebase/firestore"; 
-import { sendData } from "../firebaseConfig";
+import { getLocationCoordinates, sendData } from "../firebaseConfig";
+import Geocoder from 'react-native-geocoding';
 
 export type RootBottomTabParamList = {
   POST_CONFIRMATION: undefined;
@@ -25,9 +27,11 @@ const PostScreen: React.FC = () => {
 
   const {navigate} = useNavigation<BottomTabNavigationProp<RootBottomTabParamList>>();
 
+  Geocoder.init("AIzaSyBRlytQ9NMbuDxqulzCKnVXHmKaxI0iiSU");
+
   const [showErrors, setShowErrors] = useState(false);
 
-  const handlePressSubmit = () => {
+  const handlePressSubmit = async () => {
     setShowErrors(true);
 
     if (!title || !organizer || !date || !startTime || !endTime || !location || !meal || !allergens || !description) {
@@ -45,8 +49,23 @@ const PostScreen: React.FC = () => {
       setAllergens('');
       setReqAttendance(false);
       setDescription('');
-  
-      sendData(title, organizer, date, startTime, endTime, location, meal, allergens, reqAttendance, description);
+
+      const coordinates = await getLocationCoordinates(location)
+
+      sendData(
+        title, 
+        organizer, 
+        date, 
+        startTime, 
+        endTime, 
+        location, 
+        meal, 
+        allergens, 
+        reqAttendance, 
+        description, 
+        coordinates[0],
+        coordinates[1],
+      );
   
       navigate(ScreenNames.POST_CONFIRMATION);
     }
@@ -63,7 +82,7 @@ const PostScreen: React.FC = () => {
           <Text style={styles.label}>{"Event title"}</Text>
           <TextInput
             style={[styles.input, isFieldEmpty(title) && showErrors && styles.inputError]}
-            placeholder="Event title"
+            placeholder="Hack4Impact Info Night"
             value={title}
             onChangeText={(text) => setTitle(text)}
           />
@@ -73,7 +92,7 @@ const PostScreen: React.FC = () => {
           <Text style={styles.label}>{"Organizer name"}</Text>
           <TextInput
             style={[styles.input, isFieldEmpty(organizer) && showErrors && styles.inputError]}
-            placeholder="Organizer name" 
+            placeholder="Hack4Impact" 
             value={organizer}
             onChangeText={(text) => setOrganizer(text)}
           />
@@ -83,7 +102,7 @@ const PostScreen: React.FC = () => {
           <Text style={styles.label}>{"Date"}</Text>
           <TextInput
             style={[styles.input, isFieldEmpty(date) && showErrors && styles.inputError]}
-            placeholder="Date"
+            placeholder="12/01/23"
             value={date}
             onChangeText={(text) => setDate(text)}
           />
@@ -93,7 +112,7 @@ const PostScreen: React.FC = () => {
           <Text style={styles.label}>{"Start time"}</Text>
           <TextInput
             style={[styles.input, isFieldEmpty(startTime) && showErrors && styles.inputError]}
-            placeholder="Start time"
+            placeholder="7:00PM"
             value={startTime}
             onChangeText={(text) => setStartTime(text)}
           />
@@ -103,7 +122,7 @@ const PostScreen: React.FC = () => {
           <Text style={styles.label}>{"End time"}</Text>
           <TextInput
             style={[styles.input, isFieldEmpty(endTime) && showErrors && styles.inputError]}
-            placeholder="End time"
+            placeholder="8:00PM"
             value={endTime}
             onChangeText={(text) => setEndTime(text)}
           />
@@ -113,7 +132,7 @@ const PostScreen: React.FC = () => {
           <Text style={styles.label}>{"Location"}</Text>
           <TextInput
             style={[styles.input, isFieldEmpty(location) && showErrors && styles.inputError]}
-            placeholder="Location"
+            placeholder="Grainger Engineering Library"
             value={location}
             onChangeText={(text) => setLocation(text)}
           />
@@ -123,7 +142,7 @@ const PostScreen: React.FC = () => {
           <Text style={styles.label}>{"Meal type"}</Text>
           <TextInput
             style={[styles.input, isFieldEmpty(meal) && showErrors && styles.inputError]}
-            placeholder="Meal type"
+            placeholder="Dinner"
             value={meal}
             onChangeText={(text) => setMeal(text)}
           />
@@ -133,7 +152,7 @@ const PostScreen: React.FC = () => {
           <Text style={styles.label}>{"Allergens"}</Text>
           <TextInput
             style={[styles.input, isFieldEmpty(allergens) && showErrors && styles.inputError]}
-            placeholder="Allergens"
+            placeholder="Peanut"
             value={allergens}
             onChangeText={(text) => setAllergens(text)}
           />
@@ -143,12 +162,20 @@ const PostScreen: React.FC = () => {
           <Text style={styles.label}>{"Description of event"}</Text>
           <TextInput
             style={[styles.textArea, isFieldEmpty(description) && showErrors && styles.inputError]}
-            placeholder="Description of event"
+            placeholder="Learn about Hack4Impact in Room 30!"
             multiline
             numberOfLines={8}
             value={description}
             onChangeText={(text) => setDescription(text)}
           />
+        </View>
+
+        <View style={[styles.inputContainer, styles.checkboxContainer]}>
+          <Checkbox
+            value={reqAttendance}
+            onValueChange={setReqAttendance}
+          />
+          <Text style={styles.checkboxText}>Requires attendance</Text>
         </View>
 
         <TouchableOpacity style={styles.submitButton} onPress={handlePressSubmit}>
@@ -173,7 +200,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     alignItems: 'center',
-    height: 1000
+    height: 1025
   },
   input: {
     height: 40,
@@ -197,10 +224,12 @@ const styles = StyleSheet.create({
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 25,
+    paddingLeft: 3
   },
   checkboxText: {
     marginLeft: 8,
+    color: 'gray'
   },
   submitButton: {
     backgroundColor: '#2196F3',

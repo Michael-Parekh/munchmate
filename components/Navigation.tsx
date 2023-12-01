@@ -31,6 +31,26 @@ const HomeStackScreen = () => {
   )
 }
 
+// Stack navigator from the Map tab
+const MapStack = createStackNavigator();
+
+const MapStackScreen = () => {
+  return (
+    <MapStack.Navigator>
+      <MapStack.Screen
+        name='Map'
+        component={MapScreen}
+        options={{ headerShown: false }}
+      />
+      <MapStack.Screen
+        name='EventDetail'
+        component={EventDetailsScreen}
+        options={{ title: "" }}
+      />
+    </MapStack.Navigator>
+  )
+}
+
 const Tab = createBottomTabNavigator();
 
 const Navigation: React.FC = () => {
@@ -49,7 +69,7 @@ const Navigation: React.FC = () => {
       />
       <Tab.Screen
         name={ScreenNames.MAP}
-        component={MapScreen}
+        component={MapStackScreen}
         options={{
           headerShown: false,
           tabBarLabel: 'Map',
