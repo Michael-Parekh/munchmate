@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Modal, TextInput, Button, StyleSheet, Platform } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-const TimePickerModal = ({ isModalVisible, onClose } : { isModalVisible : any, onClose : any }) => {
+const TimePickerModal = ({ isModalVisible, onClose, setFilterStart, setFilterEnd } : { isModalVisible : any, onClose : any, setFilterStart : any, setFilterEnd : any }) => {
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
   const [showStartTimePicker, setShowStartTimePicker] = useState(false);
@@ -11,11 +11,13 @@ const TimePickerModal = ({ isModalVisible, onClose } : { isModalVisible : any, o
   const handleStartTimeChange = (event : any, selectedTime : any) => {
     setShowStartTimePicker(Platform.OS === "ios");
     setStartTime(selectedTime || startTime);
+    setFilterStart(selectedTime);
   };
 
   const handleEndTimeChange = (event : any, selectedTime : any) => {
     setShowEndTimePicker(Platform.OS === "ios");
     setEndTime(selectedTime || endTime);
+    setFilterEnd(selectedTime);
   };
 
   const showStartTimePickerModal = () => {
@@ -37,6 +39,8 @@ const TimePickerModal = ({ isModalVisible, onClose } : { isModalVisible : any, o
   const onPressOk = () => {
     console.log("Selected Start Time:", startTime.toLocaleTimeString());
     console.log("Selected End Time:", endTime.toLocaleTimeString());
+    setFilterStart(startTime);
+    setFilterEnd(endTime);
     onClose();
   };
 

@@ -1,21 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext} from "react";
 import { View, Modal, TextInput, Button, StyleSheet, Platform } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-const DatePicker = ({ isModalVisible, onClose } : { isModalVisible : boolean, onClose : any}) => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+const DatePicker = ({ isModalVisible, onClose, setFilterStart, setFilterEnd} : { isModalVisible : boolean, onClose : any, setFilterStart : any, setFilterEnd : any}) => {
   const [showStartDatePicker, setShowStartDatePicker] = useState(false);
   const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const val = 5;
 
   const handleStartDateChange = (event : any, selectedDate : any) => {
     setShowStartDatePicker(Platform.OS === "ios");
-    setStartDate(selectedDate || startDate);
+    setStartDate(selectedDate);
+    setFilterStart(selectedDate);
   };
 
   const handleEndDateChange = (event : any, selectedDate : any) => {
     setShowEndDatePicker(Platform.OS === "ios");
-    setEndDate(selectedDate || endDate);
+    setEndDate(selectedDate);
+    setFilterEnd(selectedDate);
   };
 
   const showStartDatePickerModal = () => {
@@ -32,6 +35,14 @@ const DatePicker = ({ isModalVisible, onClose } : { isModalVisible : boolean, on
 
   const hideEndDatePickerModal = () => {
     setShowEndDatePicker(false);
+  };
+
+  const onPressOk = () => {
+    console.log("Selected Start Time:", startDate.toDateString());
+    console.log("Selected End Time:", endDate.toDateString());
+    setFilterStart(startDate);
+    setFilterEnd(endDate);
+    onClose(startDate, endDate);
   };
 
   return (
@@ -73,7 +84,7 @@ const DatePicker = ({ isModalVisible, onClose } : { isModalVisible : boolean, on
             />
           )}
 
-          <Button title="OK" onPress={onClose} />
+          <Button title="OK" onPress={onPressOk} />
         </View>
       </View>
     </Modal>

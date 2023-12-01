@@ -8,12 +8,12 @@ import { collection, addDoc, getDocs, getDoc, doc } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCld8BTeJiQzVdxE1eiRv6nYozi0-xIg3I",
-  authDomain: "munchmate-24d28.firebaseapp.com",
-  projectId: "munchmate-24d28",
-  storageBucket: "munchmate-24d28.appspot.com",
-  messagingSenderId: "1086848442227",
-  appId: "1:1086848442227:web:2efd6b4fd35390e74baf06"
+  apiKey: "AIzaSyDED0C_ghtoxSIyIBPPlfk-AET8PKhFdhw",
+  authDomain: "munchmate2.firebaseapp.com",
+  projectId: "munchmate2",
+  storageBucket: "munchmate2.appspot.com",
+  messagingSenderId: "61117388250",
+  appId: "1:61117388250:web:48fa0443ac3a02ae409ce3"
 };
 
 // Initialize Firebase
@@ -67,7 +67,6 @@ export async function getData() {
 
 // Fetch one specific event data with id
 export async function getEventData(eventId) {
-  console.log(eventId)
   const docRef = doc(db, "events", eventId);
   try {
     const docSnap = await getDoc(docRef);

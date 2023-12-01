@@ -5,7 +5,7 @@ import TimePickerModal from "./Modals/TimePickerModal";
 import OrganizerPickerModal from "./Modals/OrganizerPickerModal";
 import DistanceModal from "./Modals/DistanceModal";
 
-const FilterButton = ({buttonTitle} : {buttonTitle : string}) => {
+const FilterButton = ({buttonTitle, setFilterEnd, setFilterStart, setOrganizer} : {buttonTitle : string, setFilterEnd: any, setFilterStart : any, setOrganizer : any}) => {
   const [selectedButton, setSelectedButton] = useState("");
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
@@ -21,10 +21,9 @@ const FilterButton = ({buttonTitle} : {buttonTitle : string}) => {
   return (
     <TouchableOpacity style={styles.button} onPress={() => handleButtonPress("Button 1")}>
         <Text style={styles.buttonText}>{ buttonTitle } </Text>
-        { buttonTitle === 'Date' ? <DatePickerModal isModalVisible={isDatePickerVisible} onClose={() => closeDatePicker()} /> : null }
-        { buttonTitle === 'Time' ? <TimePickerModal isModalVisible={isDatePickerVisible} onClose={() => closeDatePicker()} /> : null }
-        { buttonTitle === 'Organizer' ? <OrganizerPickerModal isModalVisible={isDatePickerVisible} onClose={() => closeDatePicker()} /> : null }
-        { buttonTitle === 'Location' ? <DistanceModal isModalVisible={isDatePickerVisible} onClose={() => closeDatePicker()} /> : null }
+        { buttonTitle === 'Date' ? <DatePickerModal setFilterStart={setFilterStart} setFilterEnd={setFilterEnd} isModalVisible={isDatePickerVisible} onClose={() => closeDatePicker()} /> : null }
+        { buttonTitle === 'Time' ? <TimePickerModal setFilterStart={setFilterStart} setFilterEnd={setFilterEnd} isModalVisible={isDatePickerVisible} onClose={() => closeDatePicker()} /> : null }
+        { buttonTitle === 'Organizer' ? <OrganizerPickerModal isModalVisible={isDatePickerVisible} onClose={() => closeDatePicker()} setOrganizer={setOrganizer} /> : null }
 
     </TouchableOpacity>
   )
