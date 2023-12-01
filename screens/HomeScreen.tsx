@@ -33,8 +33,22 @@ const HomeScreen = () => {
     return endDate;
   };
 
-  const [filterStart, setFilterStart] = useState(new Date());
-  const [filterEnd, setFilterEnd] = useState(new Date());
+  const returnStartFilter = () => {
+    const date = new Date();
+    date.setHours(11);
+
+    return date;
+  }
+
+  const returnEndFilter = () => {
+    const date = new Date();
+    date.setHours(22);
+
+    return date;
+  }
+
+  const [filterStart, setFilterStart] = useState(returnStartFilter());
+  const [filterEnd, setFilterEnd] = useState(returnEndFilter());
   const [organizerFilter, setOrganizerFilter] = useState('');
 
   const closeModal = () => {
