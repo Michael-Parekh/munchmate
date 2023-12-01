@@ -19,16 +19,16 @@ const HomeScreen = () => {
 
   const navigation = useNavigation<StackNavigationProp<StackParamList, 'Home'>>();
 
-  useFocusEffect(() => {
+  useEffect(() => {
     // write your code here, it's like componentWillMount
     const getEvents = async () => {
       const data = await getData();
       setEvents(data);
-      // console.log(data);
+      console.log(data);
     };
 
     getEvents()
-  })
+  }, [])
 
 
   return (
