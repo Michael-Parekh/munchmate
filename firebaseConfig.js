@@ -73,7 +73,6 @@ export async function getData() {
 
 // Fetch one specific event data with id
 export async function getEventData(eventId) {
-  // console.log(eventId)
   const docRef = doc(db, "events", eventId);
   try {
     const docSnap = await getDoc(docRef);

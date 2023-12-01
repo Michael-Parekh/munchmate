@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { View, Modal, TextInput, Button, StyleSheet } from "react-native";
 
-const OrganizerNameModal = ({ isModalVisible, onClose } : { isModalVisible : any, onClose : any }) => {
+const OrganizerNameModal = ({ isModalVisible, onClose, setOrganizer } : { isModalVisible : any, onClose : any, setOrganizer : any }) => {
   const [organizerName, setOrganizerName] = useState("");
 
   const handleOrganizerNameChange = (text : string) => {
     setOrganizerName(text);
+    setOrganizer(text);
   };
 
   const onPressOk = () => {
