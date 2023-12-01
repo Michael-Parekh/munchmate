@@ -49,7 +49,7 @@ const HomeScreen = () => {
     const getEvents = async () => {
       const data = await getData();
       setEvents(data);
-      // console.log(data);
+      console.log(data);
     };
 
     getEvents();
